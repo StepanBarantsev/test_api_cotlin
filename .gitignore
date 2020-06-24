@@ -42,5 +42,4 @@ test_api_cotlin.iml~
 .idea/libraries/Maven__org_jetbrains_annotations_13_0.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
-mytask.iml
 target/test-classes/META-INF/mytask.kotlin_module
