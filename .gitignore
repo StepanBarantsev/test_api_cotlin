@@ -25,3 +25,7 @@ hs_err_pid*
 .idea/modules.xml
 .idea/test_api_cotlin.iml
 .idea/vcs.xml
+test_api_cotlin.iml
+test_api_cotlin.iml~
+.idea/libraries/KotlinJavaRuntime.xml
+.idea/kotlinc.xml
