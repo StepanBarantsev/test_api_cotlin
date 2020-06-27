@@ -2,6 +2,7 @@ package ru.task
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.ObjectReader
+import com.fasterxml.jackson.databind.deser.std.ObjectArrayDeserializer
 import io.restassured.RestAssured.get
 
 
@@ -14,10 +15,18 @@ open class BaseTest {
         return stringToJsonMap(get("$baseUrl$pathRequest").body.asString())
     }
 
-    private fun stringToJsonMap(str: String): Map<String, String>
+    
+    fun stringToJsonMap(str: String): Map<String, String>
     {
         val reader: ObjectReader = ObjectMapper().readerFor(MutableMap::class.java)
         val map: Map<String, String> = reader.readValue(str)
         return map
+    }
+
+    fun jsonStringToArray(str: String): Array<Any>
+    {
+        val mapper = ObjectMapper()
+        val array: Array<Any> = mapper.readValue(str, Array<Any>::class.java)
+        return array
     }
 }
