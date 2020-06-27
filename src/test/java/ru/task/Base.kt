@@ -1,9 +1,8 @@
 package ru.task
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.ObjectReader
-import com.fasterxml.jackson.databind.deser.std.ObjectArrayDeserializer
 import io.restassured.RestAssured.get
+import ru.task.models.Accounts
 
 
 open class BaseTest {
@@ -11,8 +10,14 @@ open class BaseTest {
     // Пока не разобрался, как спрятать ключ, верну его, он не очень секретный)
     val key : String = System.getenv("key") ?: "e004ffa1bf971bf49c8a752024e47f82"
 
-    fun getResponse(pathRequest: String) : Map<String, String>{
-        return stringToJsonMap(get("$baseUrl$pathRequest").body.asString())
+    inline fun <reified T> getResponse(pathRequest: String) : T{
+
+        return parseJsonToObject(get("$baseUrl$pathRequest").body.asString())
+    }
+
+    inline fun <reified T> parseJsonToObject(response: String) : T {
+        val objectMapper = ObjectMapper()
+        return objectMapper.readValue(response, T::class.java)
     }
 
     /*

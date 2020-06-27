@@ -7,8 +7,6 @@ class TestsLocalization {
 
     @Test
     fun testFirst() {
-        assertEquals("a", "a")
-        assertEquals(2, 1 + 1, "Optional message")
-        assertEquals(2, 1 + 1, { "Assertion message " + "can be lazily evaluated" })
+        assertEquals(1, 1)
     }
 }
