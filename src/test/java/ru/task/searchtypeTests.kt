@@ -7,7 +7,7 @@ class TestsSearchType: BaseTest(){
 
     @Test
     fun testFirst() {
-        assertEquals("ok",
-                getResponse("account/list/?application_id=500cc04cab30927d633bc4016b4d5d47&search=blo&limit=1")["status"])
+        val request = "account/list/?application_id=${key}&search=blo&limit=1"
+        assertEquals("ok", getResponse(request)["status"])
     }
 }

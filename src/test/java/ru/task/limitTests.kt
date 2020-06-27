@@ -3,12 +3,13 @@ package ru.task
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class TestsLimit {
+class TestsLimit: BaseTest() {
+
+    private val localBasePath = "account/list/?"
 
     @Test
     fun testFirst() {
-        assertEquals("a", "a")
-        assertEquals(2, 1 + 1, "Optional message")
-        assertEquals(2, 1 + 1, { "Assertion message " + "can be lazily evaluated" })
+        assertEquals("ok",
+                getResponse("${localBasePath}application_id=${key}&search=blo&limit=1")["status"])
     }
 }
