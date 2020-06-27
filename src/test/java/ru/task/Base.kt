@@ -15,7 +15,7 @@ open class BaseTest {
         return stringToJsonMap(get("$baseUrl$pathRequest").body.asString())
     }
 
-    
+    /*
     fun stringToJsonMap(str: String): Map<String, String>
     {
         val reader: ObjectReader = ObjectMapper().readerFor(MutableMap::class.java)
@@ -29,4 +29,5 @@ open class BaseTest {
         val array: Array<Any> = mapper.readValue(str, Array<Any>::class.java)
         return array
     }
+    */
 }
