@@ -7,7 +7,7 @@ class SearchTypeTest {
 
     @Test
     fun testFirst() {
-        assertEquals("a", "a")
+        assertEquals("a", "b")
         assertEquals(2, 1 + 1, "Optional message")
         assertEquals(2, 1 + 1, { "Assertion message " + "can be lazily evaluated" })
     }
