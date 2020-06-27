@@ -3,7 +3,7 @@ package ru.task
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class LimitTest {
+class TestsSearchType {
 
     @Test
     fun testFirst() {
