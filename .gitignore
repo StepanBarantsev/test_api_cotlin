@@ -42,14 +42,4 @@ test_api_cotlin.iml~
 .idea/libraries/Maven__org_jetbrains_annotations_13_0.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
-target/test-classes/META-INF/mytask.kotlin_module
-target/surefire-reports/TEST-ru.task.SearchTypeTest.xml
-target/maven-archiver/pom.properties
-target/surefire-reports/TEST-ru.task.LocalizationTest.xml
-target/surefire-reports/TEST-ru.task.LimitTest.xml
-target/surefire-reports/ru.task.SearchTypeTest.txt
-target/surefire-reports/ru.task.LocalizationTest.txt
-target/surefire-reports/ru.task.LimitTest.txt
-target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
-target/surefire-reports/TEST-ru.task.TestsLimit.xml
-target/surefire-reports/ru.task.TestsLimit.txt
+target/
