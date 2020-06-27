@@ -7,7 +7,8 @@ import io.restassured.RestAssured.get
 
 open class BaseTest {
     val baseUrl = "https://api.worldoftanks.ru/wot/"
-    val key : String = System.getenv("key")
+    // Пока не разобрался, как спрятать ключ, верну его, он не очень секретный)
+    val key : String = System.getenv("key") ?: "e004ffa1bf971bf49c8a752024e47f82"
 
     fun getResponse(pathRequest: String) : Map<String, String>{
         return stringToJsonMap(get("$baseUrl$pathRequest").body.asString())
