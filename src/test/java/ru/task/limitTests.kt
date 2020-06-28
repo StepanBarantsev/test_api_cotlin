@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import ru.task.models.Accounts
 import kotlin.random.Random
-import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class TestsLimit: BaseTest() {
@@ -16,84 +15,106 @@ class TestsLimit: BaseTest() {
     // Предположим, что по этой части находится 100+ игроков (это действительно так)
     // Проверки будут построены на основе этого предположения
     private val partOfName = "blo"
+    private val defaultLimit = 100
 
     @Test
     fun testRandomValidLimit() {
-        val randNum = Random.nextInt(1,99)
+        val randNum = Random.nextInt(1, defaultLimit)
         val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=${randNum}")
 
-        assertFieldsNotNull(response)
+        assertValidFieldsNotNull(response)
 
         assertEquals("ok", response.status)
-        assert(randNum == response.meta!!["count"]!!.toInt())
+        assertEquals(randNum, response.meta!!["count"]!!.toInt())
         assertEquals(response.meta["count"]!!.toInt(), response.data!!.size)
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [1, 99])
-    fun testBorderLimits(num: Int) {
+    @ValueSource(ints = [1, 100])
+    fun testValidBorderLimits(num: Int) {
         val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=${num}")
 
-        assertFieldsNotNull(response)
+        assertValidFieldsNotNull(response)
 
         assertEquals("ok", response.status)
-        assert(num.toInt() == response.meta!!["count"]!!.toInt())
+        assertEquals(num, response.meta!!["count"]!!.toInt())
         assertEquals(response.meta["count"]!!.toInt(), response.data!!.size)
     }
 
-    /*
+    // При вводе любого некорректного числового лимита (больше/меньше) возвращается default
+    @ParameterizedTest
+    @ValueSource(ints = [0, 101])
+    fun testInvalidBorderLimits(num: Int) {
+        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=${num}")
+
+        assertValidFieldsNotNull(response)
+        assertDefaultLimit(response)
+    }
+
     @Test
     fun testRandomNumberMoreThenLimit() {
-        val randNum = Random.nextInt(100,1000)
-        assertEquals("ok",
-                getResponse("${localBasePath}application_id=${key}&search=blo&limit=${randNum}"))
-    }
+        val randNum = Random.nextInt(defaultLimit + 1,defaultLimit * 10)
+        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=${randNum}")
 
-    */
-    /*
+        assertValidFieldsNotNull(response)
+        assertDefaultLimit(response)
+    }
 
     @Test
-    fun testZeroLimit() {
-        assertEquals("ok",
-                getResponse("${localBasePath}application_id=${key}&search=blo&limit=0"))
+    fun testWithoutLimit() {
+        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}")
+
+        assertValidFieldsNotNull(response)
+        assertDefaultLimit(response)
     }
 
-    */
-    /*
+    @Test
+    fun testEmptyLimit() {
+        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=")
+
+        assertValidFieldsNotNull(response)
+        assertDefaultLimit(response)
+    }
 
     @Test
     fun testNegativeLimit() {
         val randNum = Random.nextInt(-200,-1)
-        assertEquals("ok",
-                getResponse("${localBasePath}application_id=${key}&search=blo&limit=${randNum}"))
-    }
+        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=${randNum}")
 
-    */
-    /*
+        assertValidFieldsNotNull(response)
+        assertDefaultLimit(response)
+    }
 
     @Test
     fun testStingLimit() {
         val str = "fdkdfkdfksdksdksdj"
-        assertEquals("ok",
-                getResponse("${localBasePath}application_id=${key}&search=blo&limit=${str}"))
+        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=${str}")
+
+        assertNotNull(response.status)
+        assertNotNull(response.error)
+        assertNotNull(response.error["field"])
+        assertNotNull(response.error["message"])
+        assertNotNull(response.error["code"])
+        assertNotNull(response.error["value"])
+
+        assertEquals("error", response.status)
+        assertEquals("limit", response.error["field"])
+        assertEquals("INVALID_LIMIT", response.error["message"])
+        assertEquals("407", response.error["code"])
+        assertEquals(str, response.error["value"])
     }
 
-    */
-    /*
-
-    @Test
-    fun testEmptyLimit() {
-        assertEquals("ok",
-                getResponse("${localBasePath}application_id=${key}&search=blo&limit="))
-    }
-
-    */
-
-    private fun assertFieldsNotNull(response: Accounts) {
+    private fun assertValidFieldsNotNull(response: Accounts) {
         assertNotNull(response.status)
         assertNotNull(response.meta)
         assertNotNull(response.meta["count"])
         assertNotNull(response.data)
+    }
+
+    private fun assertDefaultLimit(response: Accounts) {
+        assertEquals("ok", response.status)
+        assertEquals(defaultLimit, response.meta!!["count"]!!.toInt())
+        assertEquals(defaultLimit, response.data!!.size)
     }
 
 
