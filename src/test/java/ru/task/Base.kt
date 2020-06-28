@@ -2,8 +2,7 @@ package ru.task
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.restassured.RestAssured.get
-import ru.task.helpers.LimitHelper
-import ru.task.models.Accounts
+import ru.task.helpers.AccountsHelper
 
 
 class BaseTest {
@@ -12,7 +11,7 @@ class BaseTest {
     // Пока не разобрался, как спрятать ключ, верну его, он не очень секретный)
     val key : String = System.getenv("key") ?: "e004ffa1bf971bf49c8a752024e47f82"
 
-    val limitHelper = LimitHelper(this)
+    val accountsHelper = AccountsHelper(this)
 
     inline fun <reified T> getResponse(pathRequest: String) : T{
 

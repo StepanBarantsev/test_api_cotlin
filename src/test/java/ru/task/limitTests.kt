@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.kohsuke.rngom.parse.host.Base
 import ru.task.models.Accounts
 import kotlin.random.Random
 import kotlin.test.assertNotNull
@@ -13,12 +12,16 @@ class TestsLimit {
 
     private val app = BaseTest()
 
+    // Предположим, что по этой части находится 100+ игроков (это действительно так)
+    // Проверки будут построены на основе этого предположения
+    val partOfName = "blo"
+
     @Test
     fun testRandomValidLimit() {
-        val randNum = Random.nextInt(1,app.limitHelper.defaultLimit)
-        val response = app.limitHelper.sendLimitRequest(randNum)
+        val randNum = Random.nextInt(1,app.accountsHelper.defaultLimit)
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=randNum)
 
-        app.limitHelper.assertValidFieldsNotNull(response)
+        app.accountsHelper.assertValidFieldsNotNull(response)
 
         assertEquals("ok", response.status)
         assertEquals(randNum, response.meta!!["count"]!!.toInt())
@@ -28,9 +31,9 @@ class TestsLimit {
     @ParameterizedTest
     @ValueSource(ints = [1, 100])
     fun testValidBorderLimits(num: Int) {
-        val response = app.limitHelper.sendLimitRequest(num)
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=num)
 
-        app.limitHelper.assertValidFieldsNotNull(response)
+        app.accountsHelper.assertValidFieldsNotNull(response)
 
         assertEquals("ok", response.status)
         assertEquals(num, response.meta!!["count"]!!.toInt())
@@ -41,50 +44,50 @@ class TestsLimit {
     @ParameterizedTest
     @ValueSource(ints = [0, 101])
     fun testInvalidBorderLimits(num: Int) {
-        val response = app.limitHelper.sendLimitRequest(num)
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=num)
 
-        app.limitHelper.assertValidFieldsNotNull(response)
-        app.limitHelper.assertDefaultLimit(response)
+        app.accountsHelper.assertValidFieldsNotNull(response)
+        app.accountsHelper.assertDefaultLimit(response)
     }
 
     @Test
     fun testRandomNumberMoreThenLimit() {
-        val randNum = Random.nextInt(app.limitHelper.defaultLimit + 1,app.limitHelper.defaultLimit * 10)
-        val response = app.limitHelper.sendLimitRequest(randNum)
+        val randNum = Random.nextInt(app.accountsHelper.defaultLimit + 1,app.accountsHelper.defaultLimit * 10)
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=randNum)
 
-        app.limitHelper.assertValidFieldsNotNull(response)
-        app.limitHelper.assertDefaultLimit(response)
+        app.accountsHelper.assertValidFieldsNotNull(response)
+        app.accountsHelper.assertDefaultLimit(response)
     }
 
     @Test
     fun testWithoutLimit() {
-        val response = app.limitHelper.sendRequestWithoutLimit()
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName)
 
-        app.limitHelper.assertValidFieldsNotNull(response)
-        app.limitHelper.assertDefaultLimit(response)
+        app.accountsHelper.assertValidFieldsNotNull(response)
+        app.accountsHelper.assertDefaultLimit(response)
     }
 
     @Test
     fun testEmptyLimit() {
-        val response = app.limitHelper.sendLimitRequest("")
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit="")
 
-        app.limitHelper.assertValidFieldsNotNull(response)
-        app.limitHelper.assertDefaultLimit(response)
+        app.accountsHelper.assertValidFieldsNotNull(response)
+        app.accountsHelper.assertDefaultLimit(response)
     }
 
     @Test
     fun testNegativeLimit() {
         val randNum = Random.nextInt(-200,-1)
-        val response = app.limitHelper.sendLimitRequest(randNum)
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=randNum)
 
-        app.limitHelper.assertValidFieldsNotNull(response)
-        app.limitHelper.assertDefaultLimit(response)
+        app.accountsHelper.assertValidFieldsNotNull(response)
+        app.accountsHelper.assertDefaultLimit(response)
     }
 
     @Test
     fun testStingLimit() {
         val str = "fdkdfkdfksdksdksdj"
-        val response: Accounts = app.limitHelper.sendLimitRequest(str)
+        val response: Accounts = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=str)
 
         assertNotNull(response.status)
         assertNotNull(response.error)
