@@ -29,17 +29,18 @@ class TestsLimit: BaseTest() {
         assertEquals(response.meta["count"]!!.toInt(), response.data!!.size)
     }
 
-    /*
-    @Test
     @ParameterizedTest
     @ValueSource(ints = [1, 99])
     fun testBorderLimits(num: Int) {
-        val response = getResponse("${localBasePath}application_id=${key}&search=blo&limit=${num}")
-        assertEquals("ok", response["status"])
-        assertNotNull(response["count"])
-        assert(randNum >= response["count"]!!.toInt())
+        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=${num}")
+
+        assertFieldsNotNull(response)
+
+        assertEquals("ok", response.status)
+        assert(num.toInt() == response.meta!!["count"]!!.toInt())
+        assertEquals(response.meta["count"]!!.toInt(), response.data!!.size)
     }
-    */
+
     /*
     @Test
     fun testRandomNumberMoreThenLimit() {
