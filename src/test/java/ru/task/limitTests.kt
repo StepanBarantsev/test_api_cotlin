@@ -13,15 +13,20 @@ class TestsLimit: BaseTest() {
 
     private val localBasePath = "account/list/?"
 
+    // Предположим, что по этой части находится 100+ игроков (это действительно так)
+    // Проверки будут построены на основе этого предположения
+    private val partOfName = "blo"
+
     @Test
     fun testRandomValidLimit() {
         val randNum = Random.nextInt(1,99)
-        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=blo&limit=${randNum}")
+        val response: Accounts = getResponse("${localBasePath}application_id=${key}&search=${partOfName}&limit=${randNum}")
+
+        assertFieldsNotNull(response)
+
         assertEquals("ok", response.status)
-        //assertNotNull(response.meta["count"])
-        //assert(randNum >= response.meta["count"]!!.toInt())
-        //assertNotNull(response.data)
-        //assertEquals(response.meta["count"]!!.toInt(), response.data.size)
+        assert(randNum == response.meta!!["count"]!!.toInt())
+        assertEquals(response.meta["count"]!!.toInt(), response.data!!.size)
     }
 
     /*
@@ -82,4 +87,13 @@ class TestsLimit: BaseTest() {
     }
 
     */
+
+    private fun assertFieldsNotNull(response: Accounts) {
+        assertNotNull(response.status)
+        assertNotNull(response.meta)
+        assertNotNull(response.meta["count"])
+        assertNotNull(response.data)
+    }
+
+
 }
