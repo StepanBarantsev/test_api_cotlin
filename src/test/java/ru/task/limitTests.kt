@@ -89,18 +89,11 @@ class TestsLimit {
         val str = "fdkdfkdfksdksdksdj"
         val response: Accounts = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=str)
 
-        assertNotNull(response.status)
-        assertNotNull(response.error)
-        assertNotNull(response.error["field"])
-        assertNotNull(response.error["message"])
-        assertNotNull(response.error["code"])
-        assertNotNull(response.error["value"])
+        app.accountsHelper.assertErrorFieldsNotNull(response, response.error)
+        app.accountsHelper.assertErrorFields(response, response.error, "limit", "INVALID_LIMIT", "407", str)
 
-        assertEquals("error", response.status)
-        assertEquals("limit", response.error["field"])
-        assertEquals("INVALID_LIMIT", response.error["message"])
-        assertEquals("407", response.error["code"])
-        assertEquals(str, response.error["value"])
     }
+
+
 
 }
