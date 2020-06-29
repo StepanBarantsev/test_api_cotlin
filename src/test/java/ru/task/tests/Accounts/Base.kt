@@ -25,6 +25,7 @@ class BaseTest {
         return objectMapper.readValue(response, T::class.java)
     }
 
+
     /*
     fun stringToJsonMap(str: String): Map<String, String>
     {

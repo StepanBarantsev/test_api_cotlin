@@ -4,6 +4,7 @@ import ru.task.tests.Accounts.BaseTest
 import ru.task.models.Accounts
 import kotlin.test.assertNotNull
 import kotlin.test.assertEquals
+import kotlin.test.assert
 
 class AccountsHelper(val app: BaseTest) {
 
@@ -11,43 +12,45 @@ class AccountsHelper(val app: BaseTest) {
     val defaultLimit = 100
 
     fun assertValidFieldsNotNull(response: Accounts) {
-        assertNotNull(response.status)
-        assertNotNull(response.meta)
-        assertNotNull(response.meta["count"])
-        assertNotNull(response.data)
+        assertNotNull(response.status, "Поле status равно null (то есть отсутствует в json ответе)")
+        assertNotNull(response.meta, "Поле meta равно null (то есть отсутствует в json ответе)")
+        assertNotNull(response.meta["count"], "Поле meta[\"count\"] равно null (то есть отсутствует в json ответе)")
+        assertNotNull(response.data, "Поле data равно null (то есть отсутствует в json ответе)")
     }
 
     fun assertDefaultLimit(response: Accounts) {
         assertOkStatus(response)
-        assertEquals(defaultLimit, response.meta!!["count"]!!.toInt())
-        assertEquals(defaultLimit, response.data!!.size)
+        assertLimitEqualDataAndMeta(defaultLimit, response)
     }
 
     fun assertDefaultSearchType(response: Accounts, expectedNum: Int, expectedSearch: String){
         assertOkStatus(response)
-        // Приходит много записей, хотя было введено одно имя
-        assertEquals(expectedNum, response.meta!!["count"]!!.toInt())
-        assertEquals(expectedNum, response.data!!.size)
-
+        assertLimitEqualDataAndMeta(expectedNum, response)
         assertAllNicknamesStartsWith(response, expectedSearch)
     }
 
     fun assertExactSearchType(response: Accounts, expectedNum: Int, expectedNames: Array<String>){
         assertOkStatus(response)
         // Приходит много записей, хотя было введено одно имя
-        assertEquals(expectedNum, response.meta!!["count"]!!.toInt())
-        assertEquals(expectedNum, response.data!!.size)
+        assertLimitEqualDataAndMeta(expectedNum, response)
 
         assert(expectedNames.contentEquals(getAllNicknames(response)))
+        {"Ожидался список имен $expectedNames, а в результате был получен список ${getAllNicknames(response)}"}
     }
 
     fun assertEmptyData(response: Accounts){
-        assertEquals(0, response.meta!!["count"]!!.toInt())
-        assertEquals(0, response.data!!.size)
+        assertLimitEqualDataAndMeta(0, response)
+    }
+
+    fun assertLimitEqualDataAndMeta(expectedNum: Int, response: Accounts) {
+        assertEquals(expectedNum, response.meta!!["count"]!!.toInt(),
+                "В поле meta указан count равный ${response.meta["count"]}. Ожидалось $expectedNum")
+        assertEquals(expectedNum, response.data!!.size,
+                "Размер пришедшего массива data равен ${response.data.size}. Ожидалось $expectedNum")
     }
 
     fun assertOkStatus(response: Accounts) {
-        assertEquals("ok", response.status)
+        assertEquals("ok", response.status, "Ожидался status ok. Фактически он равен ${response.status}")
     }
 
     fun getAllNicknames(response: Accounts) : Array<String>{
@@ -60,18 +63,14 @@ class AccountsHelper(val app: BaseTest) {
     }
 
     fun assertAllNicknamesStartsWith(nicknames: Array<String>, namePart: String){
-        var flag = true
-        for (i in nicknames){
-            if (!(i.startsWith(namePart, ignoreCase=true))) flag = false
-        }
-        assert(flag)
+        for (i in nicknames) if (!(i.startsWith(namePart, ignoreCase=true))) throw
+        AssertionError("Не все имена из массива игроков $nicknames начинаются с $namePart")
     }
 
     fun assertAllNicknamesStartsWith(response: Accounts, namePart: String){
         val nicknames = getAllNicknames(response)
         assertAllNicknamesStartsWith(nicknames, namePart)
     }
-
 
     fun sendAccountsRequest(search: String?=null, limit: String?=null, searchType: String?=null, language: String?=null): Accounts
     {
@@ -88,12 +87,12 @@ class AccountsHelper(val app: BaseTest) {
     }
 
     fun assertErrorFieldsNotNull(response: Accounts, error: Map<String, String>?) {
-        assertNotNull(response.status)
-        assertNotNull(response.error)
-        assertNotNull(error!!["field"])
-        assertNotNull(error["message"])
-        assertNotNull(error["code"])
-        assertNotNull(error["value"])
+        assertNotNull(response.status, "Поле status равно null (то есть отсутствует в json ответе).")
+        assertNotNull(response.error, "Поле error равно null (то есть отсутствует в json ответе).")
+        assertNotNull(error!!["field"], "Поле error[\"field\"] равно null (то есть отсутствует в json ответе).")
+        assertNotNull(error["message"], "Поле error[\"message\"] равно null (то есть отсутствует в json ответе).")
+        assertNotNull(error["code"], "Поле error[\"code\"] равно null (то есть отсутствует в json ответе).")
+        assertNotNull(error["value"], "Поле error[\"value\"] равно null (то есть отсутствует в json ответе).")
     }
 
     fun assertErrorFields(response: Accounts,
@@ -102,11 +101,15 @@ class AccountsHelper(val app: BaseTest) {
                           message: String,
                           code: String,
                           value: String) {
-        assertEquals("error", response.status)
-        assertEquals(field, error!!["field"])
-        assertEquals(message, error["message"])
-        assertEquals(code, error["code"])
-        assertEquals(value, error["value"])
+        assertErrorStatus(response)
+        assertEquals(field, error!!["field"], "Ожидалось значение для error[\"field\"]: $field. Фактическое значение: ${error["field"]}")
+        assertEquals(message, error["message"], "Ожидалось значение для error[\"message\"]: $message. Фактическое значение: ${error["message"]}")
+        assertEquals(code, error["code"], "Ожидалось значение для error[\"code\"]: $code. Фактическое значение: ${error["code"]}")
+        assertEquals(value, error["value"], "Ожидалось значение для error[\"value\"]: $value. Фактическое значение: ${error["value"]}")
+    }
+
+    private fun assertErrorStatus(response: Accounts) {
+        assertEquals("error", response.status, "Ожидался status error. Фактически он равен ${response.status}")
     }
 
     private fun addLimitToRequest(request: String, limit: String?): String{

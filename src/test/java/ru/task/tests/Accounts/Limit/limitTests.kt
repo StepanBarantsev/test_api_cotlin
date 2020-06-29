@@ -22,10 +22,8 @@ class TestsLimit {
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=randNum)
 
         app.accountsHelper.assertValidFieldsNotNull(response)
-
-        assertEquals("ok", response.status)
-        assertEquals(randNum, response.meta!!["count"]!!.toInt())
-        assertEquals(response.meta["count"]!!.toInt(), response.data!!.size)
+        app.accountsHelper.assertOkStatus(response)
+        app.accountsHelper.assertLimitEqualDataAndMeta(randNum, response)
     }
 
     @ParameterizedTest
@@ -34,10 +32,8 @@ class TestsLimit {
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=num)
 
         app.accountsHelper.assertValidFieldsNotNull(response)
-
-        assertEquals("ok", response.status)
-        assertEquals(num, response.meta!!["count"]!!.toInt())
-        assertEquals(response.meta["count"]!!.toInt(), response.data!!.size)
+        app.accountsHelper.assertOkStatus(response)
+        app.accountsHelper.assertLimitEqualDataAndMeta(num, response)
     }
 
     // При вводе любого некорректного числового лимита (больше/меньше) возвращается default

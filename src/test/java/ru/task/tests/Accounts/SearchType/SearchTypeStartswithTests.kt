@@ -33,7 +33,11 @@ class TestsSearchTypeStartswith{
         app.accountsHelper.assertOkStatus(response)
 
         assert(100 > response.meta!!["count"]!!.toInt())
+        {"Имен, нашедшихся по запросу $existingPartOfNamesLessThan100: ${response.meta["count"]} (поле meta[\"count\"])." +
+                "Ожидалось, что их количество будет меньше 100"}
         assert(100 > response.data!!.size)
+        {"Имен, нашедшихся по части ника $existingPartOfNamesLessThan100: ${response.data.size} (количество элементов, пришедших в data)." +
+                "Ожидалось, что их количество будет меньше 100"}
         app.accountsHelper.assertAllNicknamesStartsWith(response, existingPartOfNamesLessThan100)
     }
 
