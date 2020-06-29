@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import ru.task.models.Accounts
 import kotlin.random.Random
-import kotlin.test.assertNotNull
 
 class TestsLimit {
 

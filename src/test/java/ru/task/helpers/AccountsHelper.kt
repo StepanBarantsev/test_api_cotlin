@@ -76,7 +76,7 @@ class AccountsHelper(val app: BaseTest) {
 
     fun sendAccountsRequest(search: String?=null, limit: String?=null, searchType: String?=null, language: String?=null): Accounts
     {
-        var request = "${app.accountsHelper.localBasePath}application_id=${app.key}"
+        var request = "${localBasePath}application_id=${app.key}"
         request = addSearchToRequest(request, search)
         request = addLimitToRequest(request, limit)
         request = addSearchTypeToRequest(request, searchType)
