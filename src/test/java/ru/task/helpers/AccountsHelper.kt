@@ -74,16 +74,17 @@ class AccountsHelper(val app: BaseTest) {
     }
 
 
-    fun sendAccountsRequest(search: String?=null, limit: String?=null, searchType: String?=null): Accounts
+    fun sendAccountsRequest(search: String?=null, limit: String?=null, searchType: String?=null, language: String?=null): Accounts
     {
         var request = "${app.accountsHelper.localBasePath}application_id=${app.key}"
         request = addSearchToRequest(request, search)
         request = addLimitToRequest(request, limit)
         request = addSearchTypeToRequest(request, searchType)
+        request = addLanguageToRequest(request, language)
         return app.getResponse(request)
     }
 
-    fun sendAccountsRequest(search: String?=null, limit: Int, searchType: String?=null): Accounts{
+    fun sendAccountsRequest(search: String?=null, limit: Int, searchType: String?=null, language: String?=null): Accounts{
         return sendAccountsRequest(search, limit.toString(), searchType)
     }
 
@@ -111,6 +112,10 @@ class AccountsHelper(val app: BaseTest) {
 
     private fun addLimitToRequest(request: String, limit: String?): String{
         return if (limit != null) request + "&limit=${limit}" else request
+    }
+
+    private fun addLanguageToRequest(request: String, language: String?): String{
+        return if (language != null) request + "&language=${language}" else request
     }
 
     private fun addSearchToRequest(request: String, search: String?): String{
