@@ -25,6 +25,10 @@ class BaseTest {
         return objectMapper.readValue(response, T::class.java)
     }
 
+    fun generateMessageAboutNullError(fieldName: String) : String{
+        return "Поле $fieldName равно null (то есть отсутствует в json ответе)."
+    }
+
 
     /*
     fun stringToJsonMap(str: String): Map<String, String>

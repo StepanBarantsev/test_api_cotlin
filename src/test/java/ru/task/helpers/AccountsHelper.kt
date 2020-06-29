@@ -12,10 +12,10 @@ class AccountsHelper(val app: BaseTest) {
     val defaultLimit = 100
 
     fun assertValidFieldsNotNull(response: Accounts) {
-        assertNotNull(response.status, "Поле status равно null (то есть отсутствует в json ответе)")
-        assertNotNull(response.meta, "Поле meta равно null (то есть отсутствует в json ответе)")
-        assertNotNull(response.meta["count"], "Поле meta[\"count\"] равно null (то есть отсутствует в json ответе)")
-        assertNotNull(response.data, "Поле data равно null (то есть отсутствует в json ответе)")
+        assertNotNull(response.status, app.generateMessageAboutNullError("status"))
+        assertNotNull(response.meta, app.generateMessageAboutNullError("meta"))
+        assertNotNull(response.meta["count"], app.generateMessageAboutNullError("meta[\"count\"]"))
+        assertNotNull(response.data, app.generateMessageAboutNullError("data"))
     }
 
     fun assertDefaultLimit(response: Accounts) {
@@ -55,7 +55,7 @@ class AccountsHelper(val app: BaseTest) {
 
     fun getAllNicknames(response: Accounts) : Array<String>{
         val arr = response.data
-        val result = Array<String>(arr!!.size){"empty"}
+        val result = Array(arr!!.size){"empty"}
         for (index in arr.indices){
             result[index] = arr[index]["nickname"]!!
         }
@@ -87,12 +87,12 @@ class AccountsHelper(val app: BaseTest) {
     }
 
     fun assertErrorFieldsNotNull(response: Accounts, error: Map<String, String>?) {
-        assertNotNull(response.status, "Поле status равно null (то есть отсутствует в json ответе).")
-        assertNotNull(response.error, "Поле error равно null (то есть отсутствует в json ответе).")
-        assertNotNull(error!!["field"], "Поле error[\"field\"] равно null (то есть отсутствует в json ответе).")
-        assertNotNull(error["message"], "Поле error[\"message\"] равно null (то есть отсутствует в json ответе).")
-        assertNotNull(error["code"], "Поле error[\"code\"] равно null (то есть отсутствует в json ответе).")
-        assertNotNull(error["value"], "Поле error[\"value\"] равно null (то есть отсутствует в json ответе).")
+        assertNotNull(response.status, app.generateMessageAboutNullError("status"))
+        assertNotNull(response.error, app.generateMessageAboutNullError("error"))
+        assertNotNull(error!!["field"], app.generateMessageAboutNullError("error[\"field\"]"))
+        assertNotNull(error["message"], app.generateMessageAboutNullError("error[\"message\"]"))
+        assertNotNull(error["code"], app.generateMessageAboutNullError("error[\"code\"]"))
+        assertNotNull(error["value"], app.generateMessageAboutNullError("error[\"value\"]"))
     }
 
     fun assertErrorFields(response: Accounts,
