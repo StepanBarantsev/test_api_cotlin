@@ -19,18 +19,27 @@ class AccountsHelper(val app: BaseTest) {
     }
 
     fun assertDefaultLimit(response: Accounts) {
-        assertEquals("ok", response.status)
+        assertOkStatus(response)
         assertEquals(defaultLimit, response.meta!!["count"]!!.toInt())
         assertEquals(defaultLimit, response.data!!.size)
     }
 
     fun assertDefaultSearchType(response: Accounts, expectedNum: Int, expectedSearch: String){
-        assertEquals("ok", response.status)
+        assertOkStatus(response)
         // Приходит много записей, хотя было введено одно имя
         assertEquals(expectedNum, response.meta!!["count"]!!.toInt())
         assertEquals(expectedNum, response.data!!.size)
 
         assertAllNicknamesStartsWith(response, expectedSearch)
+    }
+
+    fun assertEmptyData(response: Accounts){
+        assertEquals(0, response.meta!!["count"]!!.toInt())
+        assertEquals(0, response.data!!.size)
+    }
+
+    fun assertOkStatus(response: Accounts) {
+        assertEquals("ok", response.status)
     }
 
     fun getAllNicknames(response: Accounts) : Array<String>{
