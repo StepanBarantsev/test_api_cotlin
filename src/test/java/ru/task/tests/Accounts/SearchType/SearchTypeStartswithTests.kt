@@ -1,6 +1,7 @@
 package ru.task.tests.Accounts.SearchType
 
 import org.junit.jupiter.api.Test
+import ru.task.models.ErrorModel
 import ru.task.tests.Accounts.BaseTest
 
 class TestsSearchTypeStartswith{
@@ -81,16 +82,16 @@ class TestsSearchTypeStartswith{
     fun testNameLessMinLength() {
         val response = app.accountsHelper.sendAccountsRequest(search=nameOneSymbol, searchType=searchType)
 
-        app.accountsHelper.assertErrorFieldsNotNull(response, response.error)
-        app.accountsHelper.assertErrorFields(response, response.error, "search", "NOT_ENOUGH_SEARCH_LENGTH", "407", nameOneSymbol)
+        app.errorHelper.assertErrorFieldsNotNull(response, response.error)
+        app.errorHelper.assertErrorFields(response, response.error, ErrorModel("search", "NOT_ENOUGH_SEARCH_LENGTH", "407", nameOneSymbol))
     }
 
     @Test
     fun testNameMoreMaxLength() {
         val response = app.accountsHelper.sendAccountsRequest(search=name25Symbols, searchType=searchType)
 
-        app.accountsHelper.assertErrorFieldsNotNull(response, response.error)
-        app.accountsHelper.assertErrorFields(response, response.error, "search", "INVALID_SEARCH", "407", name25Symbols)
+        app.errorHelper.assertErrorFieldsNotNull(response, response.error)
+        app.errorHelper.assertErrorFields(response, response.error, ErrorModel("search", "INVALID_SEARCH", "407", name25Symbols))
     }
 
     // Это гарантированно уникальное имя

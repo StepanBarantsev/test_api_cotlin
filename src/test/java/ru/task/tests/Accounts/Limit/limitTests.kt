@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import ru.task.models.Accounts
+import ru.task.models.ErrorModel
 import ru.task.tests.Accounts.BaseTest
 import kotlin.random.Random
 
@@ -85,8 +86,8 @@ class TestsLimit {
         val str = "fdkdfkdfksdksdksdj"
         val response: Accounts = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=str)
 
-        app.accountsHelper.assertErrorFieldsNotNull(response, response.error)
-        app.accountsHelper.assertErrorFields(response, response.error, "limit", "INVALID_LIMIT", "407", str)
+        app.errorHelper.assertErrorFieldsNotNull(response, response.error)
+        app.errorHelper.assertErrorFields(response, response.error, ErrorModel("limit", "INVALID_LIMIT", "407", str))
 
     }
 

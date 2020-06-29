@@ -1,6 +1,7 @@
 package ru.task.tests.Accounts.SearchType
 
 import org.junit.jupiter.api.Test
+import ru.task.models.ErrorModel
 import ru.task.tests.Accounts.BaseTest
 
 class TestsSearchType{
@@ -12,8 +13,8 @@ class TestsSearchType{
         val type = "something_else"
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, searchType=type)
 
-        app.accountsHelper.assertErrorFieldsNotNull(response, response.error)
-        app.accountsHelper.assertErrorFields(response, response.error, "type", "INVALID_TYPE", "407", type)
+        app.errorHelper.assertErrorFieldsNotNull(response, response.error)
+        app.errorHelper.assertErrorFields(response, response.error, ErrorModel("type", "INVALID_TYPE", "407", type))
 
     }
 

@@ -3,6 +3,7 @@ package ru.task.tests.Accounts
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.restassured.RestAssured.get
 import ru.task.helpers.AccountsHelper
+import ru.task.helpers.ErrorHelper
 
 import java.util.Properties;
 
@@ -14,6 +15,7 @@ class BaseTest {
     val key : String = System.getenv("key") ?: "e004ffa1bf971bf49c8a752024e47f82"
 
     val accountsHelper = AccountsHelper(this)
+    val errorHelper = ErrorHelper(this)
 
     inline fun <reified T> getResponse(pathRequest: String) : T{
 
@@ -28,7 +30,6 @@ class BaseTest {
     fun generateMessageAboutNullError(fieldName: String) : String{
         return "Поле $fieldName равно null (то есть отсутствует в json ответе)."
     }
-
 
     /*
     fun stringToJsonMap(str: String): Map<String, String>

@@ -86,32 +86,6 @@ class AccountsHelper(val app: BaseTest) {
         return sendAccountsRequest(search, limit.toString(), searchType)
     }
 
-    fun assertErrorFieldsNotNull(response: Accounts, error: Map<String, String>?) {
-        assertNotNull(response.status, app.generateMessageAboutNullError("status"))
-        assertNotNull(response.error, app.generateMessageAboutNullError("error"))
-        assertNotNull(error!!["field"], app.generateMessageAboutNullError("error[\"field\"]"))
-        assertNotNull(error["message"], app.generateMessageAboutNullError("error[\"message\"]"))
-        assertNotNull(error["code"], app.generateMessageAboutNullError("error[\"code\"]"))
-        assertNotNull(error["value"], app.generateMessageAboutNullError("error[\"value\"]"))
-    }
-
-    fun assertErrorFields(response: Accounts,
-                          error: Map<String, String>?,
-                          field: String,
-                          message: String,
-                          code: String,
-                          value: String) {
-        assertErrorStatus(response)
-        assertEquals(field, error!!["field"], "Ожидалось значение для error[\"field\"]: $field. Фактическое значение: ${error["field"]}")
-        assertEquals(message, error["message"], "Ожидалось значение для error[\"message\"]: $message. Фактическое значение: ${error["message"]}")
-        assertEquals(code, error["code"], "Ожидалось значение для error[\"code\"]: $code. Фактическое значение: ${error["code"]}")
-        assertEquals(value, error["value"], "Ожидалось значение для error[\"value\"]: $value. Фактическое значение: ${error["value"]}")
-    }
-
-    private fun assertErrorStatus(response: Accounts) {
-        assertEquals("error", response.status, "Ожидался status error. Фактически он равен ${response.status}")
-    }
-
     private fun addLimitToRequest(request: String, limit: String?): String{
         return if (limit != null) request + "&limit=${limit}" else request
     }

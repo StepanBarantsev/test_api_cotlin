@@ -3,6 +3,7 @@ package ru.task.tests.Accounts.Localization
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import ru.task.models.ErrorModel
 import ru.task.tests.Accounts.BaseTest
 
 class TestsLocalization {
@@ -25,7 +26,7 @@ class TestsLocalization {
     fun testValidLang() {
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, language=invalidLang)
 
-        app.accountsHelper.assertErrorFieldsNotNull(response, response.error)
-        app.accountsHelper.assertErrorFields(response, response.error, "language", "INVALID_LANGUAGE", "407", invalidLang)
+        app.errorHelper.assertErrorFieldsNotNull(response, response.error)
+        app.errorHelper.assertErrorFields(response, response.error, ErrorModel("language", "INVALID_LANGUAGE", "407", invalidLang))
     }
 }
