@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.restassured.RestAssured.get
 import ru.task.helpers.AccountsHelper
 
+import java.util.Properties;
+
 
 class BaseTest {
 
