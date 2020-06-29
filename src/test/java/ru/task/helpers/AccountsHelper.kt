@@ -1,7 +1,6 @@
 package ru.task.helpers
 
-import org.junit.jupiter.api.Assertions
-import ru.task.BaseTest
+import ru.task.tests.Accounts.BaseTest
 import ru.task.models.Accounts
 import kotlin.test.assertNotNull
 import kotlin.test.assertEquals

@@ -1,4 +1,4 @@
-package ru.task
+package ru.task.tests.Accounts
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.restassured.RestAssured.get

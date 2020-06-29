@@ -1,9 +1,9 @@
-package ru.task
+package ru.task.tests.Accounts.Localization
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import ru.task.models.Accounts
+import ru.task.tests.Accounts.BaseTest
 
 class TestsLocalization {
 

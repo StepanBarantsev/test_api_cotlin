@@ -1,10 +1,11 @@
-package ru.task
+package ru.task.tests.Accounts.Limit
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import ru.task.models.Accounts
+import ru.task.tests.Accounts.BaseTest
 import kotlin.random.Random
 
 class TestsLimit {
