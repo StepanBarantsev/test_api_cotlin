@@ -156,7 +156,7 @@ class TestsSearchTypeExact{
     private val secondNotExistingName = "uuuuuuuuuuuuuuuuuuuuk"
 
     @Test
-    fun uniqueExistingNameFull() {
+    fun testUniqueExistingNameFull() {
         val response = app.accountsHelper.sendAccountsRequest(search=uniqueName, searchType=searchType)
 
         app.accountsHelper.assertValidFieldsNotNull(response)
@@ -164,7 +164,7 @@ class TestsSearchTypeExact{
     }
 
     @Test
-    fun uniqueExistingNamePart() {
+    fun testUniqueExistingNamePart() {
         val partOfUniqueName = uniqueName.substring(0, uniqueName.length - 2)
         val response = app.accountsHelper.sendAccountsRequest(search=partOfUniqueName, searchType=searchType)
 
