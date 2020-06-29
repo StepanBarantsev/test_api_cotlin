@@ -33,6 +33,15 @@ class AccountsHelper(val app: BaseTest) {
         assertAllNicknamesStartsWith(response, expectedSearch)
     }
 
+    fun assertExactSearchType(response: Accounts, expectedNum: Int, expectedNames: Array<String>){
+        assertOkStatus(response)
+        // Приходит много записей, хотя было введено одно имя
+        assertEquals(expectedNum, response.meta!!["count"]!!.toInt())
+        assertEquals(expectedNum, response.data!!.size)
+
+        assert(expectedNames.contentEquals(getAllNicknames(response)))
+    }
+
     fun assertEmptyData(response: Accounts){
         assertEquals(0, response.meta!!["count"]!!.toInt())
         assertEquals(0, response.data!!.size)
