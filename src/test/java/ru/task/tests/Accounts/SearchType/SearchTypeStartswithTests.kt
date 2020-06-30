@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import ru.task.models.ErrorModel
 import ru.task.Application
 
+
 @Tag("SearchType")
 class TestsSearchTypeStartswith{
 

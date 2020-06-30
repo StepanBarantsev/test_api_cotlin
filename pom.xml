@@ -10,6 +10,7 @@
     <properties>
         <kotlin.version>1.3.72</kotlin.version>
         <junit.jupiter.version>5.0.2</junit.jupiter.version>
+        <allTests>SearchType,Limit,Localization</allTests>
     </properties>
 
     <dependencies>
@@ -85,22 +86,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M4</version>
-                <!-- include tags
-                Как вариант, если это раскомментить, то будут запускаться только тесты типа поиска
                 <configuration>
-                    <groups>SearchType</groups>
-                    exclude tags
+                    <groups>${allTests}</groups>
                     <excludedGroups></excludedGroups>
-                </configuration>
-                -->
-                <!--
-                <configuration>
                     <forkCount>2</forkCount>
                     <reuseForks>true</reuseForks>
                     <parallel>methods</parallel>
                     <threadCountClasses>2</threadCountClasses>
                 </configuration>
-                -->
             </plugin>
         </plugins>
     </build>

@@ -1,11 +1,14 @@
 package ru.task.tests.Accounts.Localization
 
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import ru.task.models.ErrorModel
 import ru.task.Application
 
+
+@Tag("Localization")
 class TestsLocalization {
 
     private val app = Application()
