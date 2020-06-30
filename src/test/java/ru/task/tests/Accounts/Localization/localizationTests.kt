@@ -19,14 +19,14 @@ class TestsLocalization {
 
     @ParameterizedTest
     @ValueSource(strings=["en", "ru", "pl", "de", "fr", "es", "zh-cn", "zh-tw", "tr", "cs", "th", "vi", "ko"])
-    fun testInvalidLang(lang: String) {
+    fun testValidLang(lang: String) {
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, language=lang)
 
         app.accountsHelper.assertOkStatus(response)
     }
 
     @Test
-    fun testValidLang() {
+    fun testInvalidLang() {
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, language=invalidLang)
 
         app.errorHelper.assertErrorFieldsNotNull(response, response.error)
