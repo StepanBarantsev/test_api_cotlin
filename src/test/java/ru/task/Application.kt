@@ -9,11 +9,10 @@ import ru.task.specifichelpers.PropertyHelper
 
 class Application {
 
-    val propertyHelper = PropertyHelper()
-
+    private val propertyHelper = PropertyHelper()
     val baseUrl = propertyHelper.getPropertyByName("baseurl")
-    // Пока не разобрался, как спрятать ключ, верну его, он не очень секретный)
     val key = propertyHelper.getPropertyByName("key")
+
 
     val accountsHelper = AccountsHelper(this)
     val errorHelper = ErrorHelper(this)
