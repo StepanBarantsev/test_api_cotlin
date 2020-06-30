@@ -9,6 +9,10 @@ import java.util.*
 class PropertyHelper {
 
     fun getPropertyByName(name: String): String {
+
+        val result = System.getenv(name)
+        if (result != null) return result
+
         try {
             FileInputStream("src/test/resources/env.properties").use { input ->
                 val prop = Properties()

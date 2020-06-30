@@ -11,9 +11,9 @@ class Application {
 
     val propertyHelper = PropertyHelper()
 
-    val baseUrl = System.getenv("baseurl") ?: propertyHelper.getPropertyByName("baseurl")
+    val baseUrl = propertyHelper.getPropertyByName("baseurl")
     // Пока не разобрался, как спрятать ключ, верну его, он не очень секретный)
-    val key = System.getenv("key") ?: propertyHelper.getPropertyByName("key")
+    val key = propertyHelper.getPropertyByName("key")
 
     val accountsHelper = AccountsHelper(this)
     val errorHelper = ErrorHelper(this)
