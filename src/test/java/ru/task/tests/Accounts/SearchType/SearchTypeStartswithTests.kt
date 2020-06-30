@@ -2,11 +2,11 @@ package ru.task.tests.Accounts.SearchType
 
 import org.junit.jupiter.api.Test
 import ru.task.models.ErrorModel
-import ru.task.tests.Accounts.BaseTest
+import ru.task.Application
 
 class TestsSearchTypeStartswith{
 
-    private val app = BaseTest()
+    private val app = Application()
     private val searchType = "startswith"
     private val minlength = 3
     private val maxlength = 24

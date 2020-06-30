@@ -1,11 +1,11 @@
 package ru.task.tests.Accounts.SearchType
 
 import org.junit.jupiter.api.Test
-import ru.task.tests.Accounts.BaseTest
+import ru.task.Application
 
 class TestsSearchTypeExact{
 
-    private val app = BaseTest()
+    private val app = Application()
     private val uniqueName = "BloodestLotus"
     private val searchType = "exact"
     private val secondExistingName = "Step08"

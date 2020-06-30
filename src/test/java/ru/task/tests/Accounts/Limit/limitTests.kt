@@ -1,17 +1,16 @@
 package ru.task.tests.Accounts.Limit
 
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import ru.task.models.Accounts
 import ru.task.models.ErrorModel
-import ru.task.tests.Accounts.BaseTest
+import ru.task.Application
 import kotlin.random.Random
 
 class TestsLimit {
 
-    private val app = BaseTest()
+    private val app = Application()
 
     // Предположим, что по этой части находится 100+ игроков (это действительно так)
     // Проверки будут построены на основе этого предположения

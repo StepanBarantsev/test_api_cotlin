@@ -1,12 +1,11 @@
 package ru.task.helpers
 
-import ru.task.tests.Accounts.BaseTest
+import ru.task.Application
 import ru.task.models.Accounts
 import kotlin.test.assertNotNull
 import kotlin.test.assertEquals
-import kotlin.test.assert
 
-class AccountsHelper(val app: BaseTest) {
+class AccountsHelper(val app: Application) {
 
     val localBasePath = "account/list/?"
     val defaultLimit = 100

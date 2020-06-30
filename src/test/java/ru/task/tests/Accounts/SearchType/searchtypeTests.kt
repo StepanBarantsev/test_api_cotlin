@@ -2,10 +2,10 @@ package ru.task.tests.Accounts.SearchType
 
 import org.junit.jupiter.api.Test
 import ru.task.models.ErrorModel
-import ru.task.tests.Accounts.BaseTest
+import ru.task.Application
 
 class TestsSearchType{
-    private val app = BaseTest()
+    private val app = Application()
     private val partOfName = "blo"
 
     @Test

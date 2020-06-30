@@ -1,18 +1,19 @@
-package ru.task.tests.Accounts
+package ru.task
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.restassured.RestAssured.get
 import ru.task.helpers.AccountsHelper
 import ru.task.helpers.ErrorHelper
+import ru.task.specifichelpers.PropertyHelper
 
-import java.util.Properties;
 
+class Application {
 
-class BaseTest {
+    val propertyHelper = PropertyHelper()
 
-    val baseUrl = "https://api.worldoftanks.ru/wot/"
+    val baseUrl = System.getenv("baseurl") ?: propertyHelper.getPropertyByName("baseurl")
     // Пока не разобрался, как спрятать ключ, верну его, он не очень секретный)
-    val key : String = System.getenv("key") ?: "e004ffa1bf971bf49c8a752024e47f82"
+    val key = System.getenv("key") ?: propertyHelper.getPropertyByName("key")
 
     val accountsHelper = AccountsHelper(this)
     val errorHelper = ErrorHelper(this)

@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import ru.task.models.ErrorModel
-import ru.task.tests.Accounts.BaseTest
+import ru.task.Application
 
 class TestsLocalization {
 
-    private val app = BaseTest()
+    private val app = Application()
     private val invalidLang = "jf"
     private val validLangs = arrayOf("en", "ru", "pl", "de", "fr", "es", "zh-cn", "zh-tw", "tr", "cs", "th", "vi", "ko")
     private val partOfName = "blo"

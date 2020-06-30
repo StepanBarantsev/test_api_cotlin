@@ -2,11 +2,11 @@ package ru.task.helpers
 
 import ru.task.models.Accounts
 import ru.task.models.ErrorModel
-import ru.task.tests.Accounts.BaseTest
+import ru.task.Application
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class ErrorHelper(val app: BaseTest) {
+class ErrorHelper(val app: Application) {
 
     fun assertErrorFieldsNotNull(response: Accounts, error: Map<String, String>?) {
         assertNotNull(response.status, app.generateMessageAboutNullError("status"))
