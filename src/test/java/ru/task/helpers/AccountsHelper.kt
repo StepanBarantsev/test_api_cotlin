@@ -4,12 +4,14 @@ import ru.task.Application
 import ru.task.models.Accounts
 import kotlin.test.assertNotNull
 import kotlin.test.assertEquals
+import io.qameta.allure.Step
 
 class AccountsHelper(val app: Application) {
 
     val localBasePath = "account/list/?"
     val defaultLimit = 100
 
+    @Step("Проверка, что поля status, meta, meta[count], data не равны null")
     fun assertValidFieldsNotNull(response: Accounts) {
         assertNotNull(response.status, app.generateMessageAboutNullError("status"))
         assertNotNull(response.meta, app.generateMessageAboutNullError("meta"))
@@ -17,17 +19,20 @@ class AccountsHelper(val app: Application) {
         assertNotNull(response.data, app.generateMessageAboutNullError("data"))
     }
 
+    @Step("Проверка, что limit равен {defaultLimit}")
     fun assertDefaultLimit(response: Accounts) {
         assertOkStatus(response)
         assertLimitEqualDataAndMeta(defaultLimit, response)
     }
 
+    @Step("Проверка, что type равен startswith")
     fun assertDefaultSearchType(response: Accounts, expectedNum: Int, expectedSearch: String){
         assertOkStatus(response)
         assertLimitEqualDataAndMeta(expectedNum, response)
         assertAllNicknamesStartsWith(response, expectedSearch)
     }
 
+    @Step("Проверка, что type равен exact")
     fun assertExactSearchType(response: Accounts, expectedNum: Int, expectedNames: Array<String>){
         assertOkStatus(response)
         // Приходит много записей, хотя было введено одно имя
@@ -37,10 +42,12 @@ class AccountsHelper(val app: Application) {
         {"Ожидался список имен $expectedNames, а в результате был получен список ${getAllNicknames(response)}"}
     }
 
+    @Step("Проверка, что поле data содаржит в себе пустой список")
     fun assertEmptyData(response: Accounts){
         assertLimitEqualDataAndMeta(0, response)
     }
 
+    @Step("Проверка, что поле limit равен {expectedNum}")
     fun assertLimitEqualDataAndMeta(expectedNum: Int, response: Accounts) {
         assertEquals(expectedNum, response.meta!!["count"]!!.toInt(),
                 "В поле meta указан count равный ${response.meta["count"]}. Ожидалось $expectedNum")
@@ -48,11 +55,12 @@ class AccountsHelper(val app: Application) {
                 "Размер пришедшего массива data равен ${response.data.size}. Ожидалось $expectedNum")
     }
 
+    @Step("Проверка, что status равен ok")
     fun assertOkStatus(response: Accounts) {
         assertEquals("ok", response.status, "Ожидался status ok. Фактически он равен ${response.status}")
     }
 
-    fun getAllNicknames(response: Accounts) : Array<String>{
+    private fun getAllNicknames(response: Accounts) : Array<String>{
         val arr = response.data
         val result = Array(arr!!.size){"empty"}
         for (index in arr.indices){
@@ -61,6 +69,7 @@ class AccountsHelper(val app: Application) {
         return result
     }
 
+    @Step("Проверка, что все ники начинаются на {namePart}")
     fun assertAllNicknamesStartsWith(nicknames: Array<String>, namePart: String){
         for (i in nicknames) if (!(i.startsWith(namePart, ignoreCase=true))) throw
         AssertionError("Не все имена из массива игроков $nicknames начинаются с $namePart")

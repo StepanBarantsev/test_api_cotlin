@@ -5,6 +5,7 @@ import io.restassured.RestAssured.get
 import ru.task.helpers.AccountsHelper
 import ru.task.helpers.ErrorHelper
 import ru.task.specifichelpers.PropertyHelper
+import io.qameta.allure.Step
 
 
 class Application {
@@ -17,6 +18,7 @@ class Application {
     val accountsHelper = AccountsHelper(this)
     val errorHelper = ErrorHelper(this)
 
+    @Step("Отправка запроса {pathRequest}")
     inline fun <reified T> getResponse(pathRequest: String) : T{
 
         return parseJsonToObject(get("$baseUrl$pathRequest").body.asString())

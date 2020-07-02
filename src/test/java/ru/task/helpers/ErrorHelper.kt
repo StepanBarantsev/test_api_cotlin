@@ -1,5 +1,6 @@
 package ru.task.helpers
 
+import io.qameta.allure.Step
 import ru.task.models.Accounts
 import ru.task.models.ErrorModel
 import ru.task.Application
@@ -8,6 +9,7 @@ import kotlin.test.assertNotNull
 
 class ErrorHelper(val app: Application) {
 
+    @Step("Проверка, что поля status, error, error[field], error[message], error[code], error[value] не равны null")
     fun assertErrorFieldsNotNull(response: Accounts, error: Map<String, String>?) {
         assertNotNull(response.status, app.generateMessageAboutNullError("status"))
         assertNotNull(response.error, app.generateMessageAboutNullError("error"))
@@ -17,6 +19,7 @@ class ErrorHelper(val app: Application) {
         assertNotNull(error["value"], app.generateMessageAboutNullError("error[\"value\"]"))
     }
 
+    @Step("Проверка, что error[field] == {error!![\"field\"]!!}, error[message] == {error[\"message\"]!!}, error[code] == {error[\"code\"]!!}, error[value] == {error[\"value\"]!!}")
     fun assertErrorFields(response: Accounts,
                           error: Map<String, String>?,
                           errorExpected: ErrorModel) {
@@ -26,6 +29,7 @@ class ErrorHelper(val app: Application) {
                 "Ожидаемое сообщение об ошибке: $errorExpected. Фактическое сообщение: $errorActual")
     }
 
+    @Step("Проверка, что status равен error")
     private fun assertErrorStatus(response: Accounts) {
         assertEquals("error", response.status, "Ожидался status error. Фактически он равен ${response.status}")
     }
