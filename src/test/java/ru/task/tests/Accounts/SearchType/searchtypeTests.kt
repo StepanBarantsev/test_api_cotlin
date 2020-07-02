@@ -19,7 +19,7 @@ class TestsSearchType{
     @Description("Отправка запроса с непредусмотренным параметром type")
     fun testInvalidSearchType() {
         val type = "something_else"
-        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, searchType=type)
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, type=type)
 
         app.errorHelper.assertErrorFieldsNotNull(response, response.error)
         app.errorHelper.assertErrorFields(response, response.error, ErrorModel("type", "INVALID_TYPE", "407", type))
@@ -30,7 +30,7 @@ class TestsSearchType{
     @DisplayName("Отправка запроса с пустым параметром type")
     @Description("Отправка запроса с пустым параметром type")
     fun testEmptySearchType(){
-        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, searchType="")
+        val response = app.accountsHelper.sendAccountsRequest(search=partOfName, type="")
 
         app.accountsHelper.assertValidFieldsNotNull(response)
         app.accountsHelper.assertDefaultSearchType(response, expectedSearch=partOfName, expectedNum=100)

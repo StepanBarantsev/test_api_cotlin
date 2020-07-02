@@ -81,17 +81,16 @@ class AccountsHelper(val app: Application) {
     }
 
     @Step("Посылаем запрос")
-    fun sendAccountsRequest(search: String?=null, limit: String?=null, searchType: String?=null, language: String?=null): Accounts
+    fun sendAccountsRequest(search: String?=null, limit: String?=null, type: String?=null, language: String?=null): Accounts
     {
         var request = "${localBasePath}application_id=${app.key}"
         request = addSearchToRequest(request, search)
         request = addLimitToRequest(request, limit)
-        request = addSearchTypeToRequest(request, searchType)
+        request = addSearchTypeToRequest(request, type)
         request = addLanguageToRequest(request, language)
         return app.getResponse(request)
     }
 
-    @Step("Посылаем запрос")
     fun sendAccountsRequest(search: String?=null, limit: Int, searchType: String?=null, language: String?=null): Accounts{
         return sendAccountsRequest(search, limit.toString(), searchType)
     }
