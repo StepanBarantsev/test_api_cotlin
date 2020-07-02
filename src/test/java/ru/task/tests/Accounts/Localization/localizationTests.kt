@@ -7,9 +7,11 @@ import org.junit.jupiter.params.provider.ValueSource
 import ru.task.models.ErrorModel
 import ru.task.Application
 import io.qameta.allure.Description
+import org.junit.jupiter.api.DisplayName
 
 
 @Tag("Localization")
+@DisplayName("Проверка параметра language")
 class TestsLocalization {
 
     private val app = Application()
@@ -18,7 +20,7 @@ class TestsLocalization {
     private val partOfName = "blo"
 
 
-    @ParameterizedTest
+    @ParameterizedTest(name="Отправка запроса с валидным параметром language={0}")
     @ValueSource(strings=["en", "ru", "pl", "de", "fr", "es", "zh-cn", "zh-tw", "tr", "cs", "th", "vi", "ko"])
     @Description("Отправка запроса с валидным параметром language")
     fun testValidLang(lang: String) {
@@ -28,7 +30,8 @@ class TestsLocalization {
     }
 
     @Test
-    @Description("Отправка запроса с невалидным параметром language (непредусмотренный язык)")
+    @DisplayName("Отправка запроса с невалидным параметром language (непредусмотренный язык)")
+    @Description("Отправка запроса с валидным параметром language")
     fun testInvalidLang() {
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, language=invalidLang)
 

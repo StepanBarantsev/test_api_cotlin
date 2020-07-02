@@ -5,14 +5,17 @@ import org.junit.jupiter.api.Test
 import ru.task.models.ErrorModel
 import ru.task.Application
 import io.qameta.allure.Description
+import org.junit.jupiter.api.DisplayName
 
 
 @Tag("SearchType")
+@DisplayName("Проверка параметра type")
 class TestsSearchType{
     private val app = Application()
     private val partOfName = "blo"
 
     @Test
+    @DisplayName("Отправка запроса с непредусмотренным параметром type")
     @Description("Отправка запроса с непредусмотренным параметром type")
     fun testInvalidSearchType() {
         val type = "something_else"
@@ -24,6 +27,7 @@ class TestsSearchType{
     }
 
     @Test
+    @DisplayName("Отправка запроса с пустым параметром type")
     @Description("Отправка запроса с пустым параметром type")
     fun testEmptySearchType(){
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, searchType="")
@@ -33,6 +37,7 @@ class TestsSearchType{
     }
 
     @Test
+    @DisplayName("Отправка запроса без параметра type")
     @Description("Отправка запроса без параметра type")
     fun testWithoutSearchType(){
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName)
