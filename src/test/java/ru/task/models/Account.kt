@@ -15,6 +15,7 @@ class Accounts (val status: String? = null,
                 dataString += "nickname: ${i["nickname"]}, "
             }
 
+            dataString = dataString.substring(0, dataString.length-3)
             dataString += "}"
             return "Accounts(status=$status, meta=$meta, error=$error, data=$dataString)"
         }
