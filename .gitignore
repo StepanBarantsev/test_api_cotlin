@@ -28,3 +28,4 @@ target/
 allure-results/
 ajcore.20200702.102706.201.txt
 .allure/
+.DS_Store
