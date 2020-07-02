@@ -55,7 +55,7 @@ class TestsLimit {
     }
 
     @Test
-    @Description("Отправка запроса с значениями параметра Limit, превыщающими параметр limit")
+    @Description("Отправка запроса с значениями параметра Limit, превышающими максимально возможный")
     fun testRandomNumberMoreThenLimit() {
         val randNum = Random.nextInt(app.accountsHelper.defaultLimit + 1,app.accountsHelper.defaultLimit * 10)
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, limit=randNum)

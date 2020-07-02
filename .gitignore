@@ -27,3 +27,4 @@ test_api_cotlin.iml~
 target/
 allure-results/
 ajcore.20200702.102706.201.txt
+.allure/
