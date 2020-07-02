@@ -19,20 +19,20 @@ class AccountsHelper(val app: Application) {
         assertNotNull(response.data, app.generateMessageAboutNullError("data"))
     }
 
-    @Step("Проверка, что limit равен {defaultLimit}")
+    @Step("Проверка, что limit == defaultLimit (100)")
     fun assertDefaultLimit(response: Accounts) {
         assertOkStatus(response)
         assertLimitEqualDataAndMeta(defaultLimit, response)
     }
 
-    @Step("Проверка, что type равен startswith")
+    @Step("Проверка, что type == startswith")
     fun assertDefaultSearchType(response: Accounts, expectedNum: Int, expectedSearch: String){
         assertOkStatus(response)
         assertLimitEqualDataAndMeta(expectedNum, response)
         assertAllNicknamesStartsWith(response, expectedSearch)
     }
 
-    @Step("Проверка, что type равен exact")
+    @Step("Проверка, что type == exact")
     fun assertExactSearchType(response: Accounts, expectedNum: Int, expectedNames: Array<String>){
         assertOkStatus(response)
         // Приходит много записей, хотя было введено одно имя
@@ -47,7 +47,7 @@ class AccountsHelper(val app: Application) {
         assertLimitEqualDataAndMeta(0, response)
     }
 
-    @Step("Проверка, что поле limit равен {expectedNum}")
+    @Step("Проверка, что поле limit == {expectedNum}")
     fun assertLimitEqualDataAndMeta(expectedNum: Int, response: Accounts) {
         assertEquals(expectedNum, response.meta!!["count"]!!.toInt(),
                 "В поле meta указан count равный ${response.meta["count"]}. Ожидалось $expectedNum")
