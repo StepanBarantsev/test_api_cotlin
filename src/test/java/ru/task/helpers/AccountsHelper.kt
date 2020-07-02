@@ -80,6 +80,7 @@ class AccountsHelper(val app: Application) {
         assertAllNicknamesStartsWith(nicknames, namePart)
     }
 
+    @Step("Посылаем запрос")
     fun sendAccountsRequest(search: String?=null, limit: String?=null, searchType: String?=null, language: String?=null): Accounts
     {
         var request = "${localBasePath}application_id=${app.key}"
@@ -90,6 +91,7 @@ class AccountsHelper(val app: Application) {
         return app.getResponse(request)
     }
 
+    @Step("Посылаем запрос")
     fun sendAccountsRequest(search: String?=null, limit: Int, searchType: String?=null, language: String?=null): Accounts{
         return sendAccountsRequest(search, limit.toString(), searchType)
     }

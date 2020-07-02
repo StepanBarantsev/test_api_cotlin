@@ -19,7 +19,7 @@ class ErrorHelper(val app: Application) {
         assertNotNull(error["value"], app.generateMessageAboutNullError("error[\"value\"]"))
     }
 
-    @Step("Проверка, что error[field] == {error!![\"field\"]!!}, error[message] == {error[\"message\"]!!}, error[code] == {error[\"code\"]!!}, error[value] == {error[\"value\"]!!}")
+    @Step("Проверка, что {error} == {errorExpected}")
     fun assertErrorFields(response: Accounts,
                           error: Map<String, String>?,
                           errorExpected: ErrorModel) {

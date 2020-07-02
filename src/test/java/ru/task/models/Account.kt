@@ -8,14 +8,16 @@ class Accounts (val status: String? = null,
                 val error: Map<String, String>? = null){
 
     override fun toString() : String {
-        var dataString = "{"
+        if (status == "ok"){
+            var dataString = "{"
 
-        for (i in data!!){
-            dataString += "nickname: ${i["nickname"]}, "
+            for (i in data!!) {
+                dataString += "nickname: ${i["nickname"]}, "
+            }
+
+            dataString += "}"
+            return "Accounts(status=$status, meta=$meta, error=$error, data=$dataString)"
         }
-
-        dataString += "}"
-        return "Accounts(status=$status, meta=$meta, error=$error, data=$dataString)"
+        else return "Accounts(status=$status)"
     }
-
 }
