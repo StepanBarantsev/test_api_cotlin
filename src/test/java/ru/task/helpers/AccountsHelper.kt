@@ -39,7 +39,7 @@ class AccountsHelper(val app: Application) {
         assertLimitEqualDataAndMeta(expectedNum, response)
 
         assert(expectedNames.contentEquals(getAllNicknames(response)))
-        {"Ожидался список имен $expectedNames, а в результате был получен список ${getAllNicknames(response)}"}
+        {"Ожидался список имен ${expectedNames.joinToString(separator = ", ")}, а в результате был получен список ${getAllNicknames(response).joinToString(separator = ", ")}"}
     }
 
     @Step("Проверка, что поле data содаржит в себе пустой список")
@@ -72,7 +72,7 @@ class AccountsHelper(val app: Application) {
     @Step("Проверка, что все ники начинаются на {namePart}")
     fun assertAllNicknamesStartsWith(nicknames: Array<String>, namePart: String){
         for (i in nicknames) if (!(i.startsWith(namePart, ignoreCase=true))) throw
-        AssertionError("Не все имена из массива игроков $nicknames начинаются с $namePart")
+        AssertionError("Не все имена из массива игроков ${nicknames.joinToString(separator = ", ")} начинаются с $namePart")
     }
 
     fun assertAllNicknamesStartsWith(response: Accounts, namePart: String){
