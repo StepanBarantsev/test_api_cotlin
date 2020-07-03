@@ -22,7 +22,7 @@ class TestsLocalization {
 
     @ParameterizedTest(name="Отправка запроса с валидным параметром language={0}")
     @ValueSource(strings=["en", "ru", "pl", "de", "fr", "es", "zh-cn", "zh-tw", "tr", "cs", "th", "vi", "ko"])
-    @Description("Отправка запроса с валидным параметром language")
+    @Description("Отправка запроса с валидным параметром language. Ожидается ответ status==ok")
     fun testValidLang(lang: String) {
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, language=lang)
 
@@ -31,7 +31,7 @@ class TestsLocalization {
 
     @Test
     @DisplayName("Отправка запроса с невалидным параметром language (непредусмотренный язык)")
-    @Description("Отправка запроса с валидным параметром language")
+    @Description("Отправка запроса с невалидным параметром language. Ожидается ответ status==error, error[message] == INVALID_LANGUAGE")
     fun testInvalidLang() {
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, language=invalidLang)
 

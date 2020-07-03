@@ -26,7 +26,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search по которому находится 100+ ников")
-    @Description("Отправка запроса с параметром type=startswith и параметром search по которому находится 100+ ников")
+    @Description("Отправка запроса с параметром type=startswith и параметром search по которому находится 100+ ников. Ожидается 100 найденных игроков")
     fun testExistingNamesMoreThan100() {
         val response = app.accountsHelper.sendAccountsRequest(search=existingPartOfNamesMoreThan100, type=searchType)
 
@@ -36,7 +36,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search по которому находится меньше 100 ников")
-    @Description("Отправка запроса с параметром type=startswith и параметром search по которому находится меньше 100 ников")
+    @Description("Отправка запроса с параметром type=startswith и параметром search по которому находится меньше 100 ников. Ожидается меньше 100 найденных игроков")
     fun testExistingNamesLessThan100() {
         val response = app.accountsHelper.sendAccountsRequest(search=existingPartOfNamesLessThan100, type=searchType)
 
@@ -54,7 +54,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search по которому находится ровно 1 ник (ник отпавляем точно соответствующий существующему)")
-    @Description("Отправка запроса с параметром type=startswith и параметром search по которому находится ровно 1 ник (ник отпавляем точно соответствующий существующему)")
+    @Description("Отправка запроса с параметром type=startswith и параметром search по которому находится ровно 1 ник (ник отпавляем точно соответствующий существующему). Ожидается 1 найденный игрок")
     fun testUniqueExistingNameFull() {
         val response = app.accountsHelper.sendAccountsRequest(search=uniqueName, type=searchType)
 
@@ -64,7 +64,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search по которому находится ровно 1 ник (отправляем ник без двух последних сивмволов)")
-    @Description("Отправка запроса с параметром type=startswith и параметром search по которому находится ровно 1 ник (отправляем ник без двух последних сивмволов)")
+    @Description("Отправка запроса с параметром type=startswith и параметром search по которому находится ровно 1 ник (отправляем ник без двух последних сивмволов). Ожидается 1 найденный игрок")
     fun testUniqueExistingNamePart() {
         val partOfUniqueName = uniqueName.substring(0, uniqueName.length - 2)
         val response = app.accountsHelper.sendAccountsRequest(search=partOfUniqueName, type=searchType)
@@ -75,7 +75,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search на который ник заканчивается, но не начинается")
-    @Description("Отправка запроса с параметром type=startswith и параметром search на который ник заканчивается, но не начинается")
+    @Description("Отправка запроса с параметром type=startswith и параметром search на который ник заканчивается, но не начинается. Ожидается 0 найденных игроков")
     fun testNameEndwith() {
         val partOfUniqueName = uniqueName.substring(1, uniqueName.length-1)
         val response = app.accountsHelper.sendAccountsRequest(search=partOfUniqueName, type=searchType)
@@ -87,7 +87,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search по которому ничего не должно находиться")
-    @Description("Отправка запроса с параметром type=startswith и параметром search по которому ничего не должно находиться")
+    @Description("Отправка запроса с параметром type=startswith и параметром search по которому ничего не должно находиться. Ожидается 0 найденных игроков")
     fun testNotExistingName() {
         val response = app.accountsHelper.sendAccountsRequest(search=notExistingName, type=searchType)
 
@@ -98,7 +98,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search меньше минимальной длины")
-    @Description("Отправка запроса с параметром type=startswith и параметром search меньше минимальной длины")
+    @Description("Отправка запроса с параметром type=startswith и параметром search меньше минимальной длины. Ожидается status==error, error[message]==NOT_ENOUGH_SEARCH_LENGTH")
     fun testNameLessMinLength() {
         val response = app.accountsHelper.sendAccountsRequest(search=nameOneSymbol, type=searchType)
 
@@ -108,7 +108,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search больше максимальной длины")
-    @Description("Отправка запроса с параметром type=startswith и параметром search больше максимальной длины")
+    @Description("Отправка запроса с параметром type=startswith и параметром search больше максимальной длины. Ожидается status==error, error[message]==INVALID_SEARCH")
     fun testNameMoreMaxLength() {
         val response = app.accountsHelper.sendAccountsRequest(search=name25Symbols, type=searchType)
 
@@ -119,7 +119,7 @@ class TestsSearchTypeStartswith{
     // Это гарантированно уникальное имя
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search длиной в 24 символа (существующий ник)")
-    @Description("Отправка запроса с параметром type=startswith и параметром search длиной в 24 символа (существующий ник)")
+    @Description("Отправка запроса с параметром type=startswith и параметром search длиной в 24 символа (существующий ник). Ожидается 1 найденный игрок")
     fun testName24Symbols() {
         val response = app.accountsHelper.sendAccountsRequest(search=name24Symbols, type=searchType)
 
@@ -129,7 +129,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search в котором указан существующий ник, но целиком заглавными буквами")
-    @Description("Отправка запроса с параметром type=startswith и параметром search в котором указан существующий ник, но целиком заглавными буквами")
+    @Description("Отправка запроса с параметром type=startswith и параметром search в котором указан существующий ник, но целиком заглавными буквами. Ожидается 100 найденных игроков")
     fun testNameWithUpperLetters() {
         val response = app.accountsHelper.sendAccountsRequest(search=uniqueName.toLowerCase(), type=searchType)
 
@@ -139,7 +139,7 @@ class TestsSearchTypeStartswith{
 
     @Test
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search в котором указан существующий ник, но целиком строчными буквами")
-    @Description("Отправка запроса с параметром type=startswith и параметром search в котором указан существующий ник, но целиком строчными буквами")
+    @Description("Отправка запроса с параметром type=startswith и параметром search в котором указан существующий ник, но целиком строчными буквами. Ожидается 100 найденных игроков")
     fun testNameWithLowerLetters() {
         val response = app.accountsHelper.sendAccountsRequest(search=uniqueName.toUpperCase(), type=searchType)
 

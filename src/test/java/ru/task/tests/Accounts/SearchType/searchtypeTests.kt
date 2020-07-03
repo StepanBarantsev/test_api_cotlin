@@ -16,7 +16,7 @@ class TestsSearchType{
 
     @Test
     @DisplayName("Отправка запроса с непредусмотренным параметром type")
-    @Description("Отправка запроса с непредусмотренным параметром type")
+    @Description("Отправка запроса с непредусмотренным параметром type. Ожидается status==error, error[message]==INVALID_TYPE")
     fun testInvalidSearchType() {
         val type = "something_else"
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, type=type)
@@ -28,7 +28,7 @@ class TestsSearchType{
 
     @Test
     @DisplayName("Отправка запроса с пустым параметром type")
-    @Description("Отправка запроса с пустым параметром type")
+    @Description("Отправка запроса с пустым параметром type. Ожидается type==startswith")
     fun testEmptySearchType(){
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName, type="")
 
@@ -38,7 +38,7 @@ class TestsSearchType{
 
     @Test
     @DisplayName("Отправка запроса без параметра type")
-    @Description("Отправка запроса без параметра type")
+    @Description("Отправка запроса без параметра type. Ожидается type==startswith")
     fun testWithoutSearchType(){
         val response = app.accountsHelper.sendAccountsRequest(search=partOfName)
 
