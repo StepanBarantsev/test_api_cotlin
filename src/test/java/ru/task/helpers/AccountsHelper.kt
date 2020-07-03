@@ -19,7 +19,7 @@ class AccountsHelper(val app: Application) {
         assertNotNull(response.data, app.generateMessageAboutNullError("data"))
     }
 
-    @Step("Проверка, что limit == defaultLimit (100)")
+    @Step("Проверка, что data.size == meta[count] == defaultLimit (100)")
     fun assertDefaultLimit(response: Accounts) {
         assertOkStatus(response)
         assertLimitEqualDataAndMeta(defaultLimit, response)
@@ -47,7 +47,7 @@ class AccountsHelper(val app: Application) {
         assertLimitEqualDataAndMeta(0, response)
     }
 
-    @Step("Проверка, что поле limit == {expectedNum}")
+    @Step("Проверка, что поле data.size == meta[count] == {expectedNum}")
     fun assertLimitEqualDataAndMeta(expectedNum: Int, response: Accounts) {
         assertEquals(expectedNum, response.meta!!["count"]!!.toInt(),
                 "В поле meta указан count равный ${response.meta["count"]}. Ожидалось $expectedNum")
