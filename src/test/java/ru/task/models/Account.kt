@@ -14,8 +14,8 @@ class Accounts (val status: String? = null,
             for (i in data!!) {
                 dataString += "nickname: ${i["nickname"]}, "
             }
+            if (data.isNotEmpty()) dataString = dataString.substring(0, dataString.length-2)
 
-            dataString = dataString.substring(0, dataString.length-2)
             dataString += "}"
             return "Accounts(status=$status, meta=$meta, error=$error, data=$dataString)"
         }
