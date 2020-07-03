@@ -20,7 +20,6 @@ class Application {
 
     @Step("Отправка запроса {pathRequest}")
     inline fun <reified T> getResponse(pathRequest: String) : T{
-
         return parseJsonToObject(get("$baseUrl$pathRequest").body.asString())
     }
 
