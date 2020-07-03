@@ -77,7 +77,7 @@ class TestsSearchTypeStartswith{
     @DisplayName("Отправка запроса с параметром type=startswith и параметром search на который ник заканчивается, но не начинается")
     @Description("Отправка запроса с параметром type=startswith и параметром search на который ник заканчивается, но не начинается. Ожидается 0 найденных игроков")
     fun testNameEndwith() {
-        val partOfUniqueName = uniqueName.substring(1, uniqueName.length-1)
+        val partOfUniqueName = uniqueName.substring(1, uniqueName.length)
         val response = app.accountsHelper.sendAccountsRequest(search=partOfUniqueName, type=searchType)
 
         app.accountsHelper.assertOkStatus(response)
